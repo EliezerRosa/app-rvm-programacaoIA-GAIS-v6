@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designações na RVM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --brand-primary: #4f46e5; /* indigo-600 */
+        --brand-secondary: #6366f1; /* indigo-500 */
+      }
+      .btn-primary {
+        background-color: var(--brand-primary);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 0.375rem;
+        font-weight: 500;
+        transition: background-color 0.2s;
+      }
+      .btn-primary:hover {
+        background-color: #4338ca; /* indigo-700 */
+      }
+    </style>
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://aistudiocdn.com/react@^19.2.0",
+        "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+        "react/": "https://aistudiocdn.com/react@^19.2.0/",
+        "dexie": "https://aistudiocdn.com/dexie@^4.2.1",
+        "@google/genai": "https://aistudiocdn.com/@google/genai@^1.29.0"
+      }
+    }
+    </script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+      if (typeof pdfjsLib !== 'undefined') {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      }
+    </script>
+</body>
+</html>
