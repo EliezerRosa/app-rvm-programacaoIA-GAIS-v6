@@ -21,6 +21,7 @@ import ManualAssignment, { ManualAssignmentState } from './components/ManualAssi
 import DevTools from './components/DevTools';
 import { ArrowDownTrayIcon, ArrowUpTrayIcon, SparklesIcon, CogIcon, ClipboardDocumentCheckIcon } from './components/icons';
 import { getScheduleHtml } from './lib/scheduleTemplate';
+<<<<<<< HEAD
 import { saveBackupToGithub, loadBackupFromGithub, GithubBackupConfig } from './lib/githubBackup';
     // --- GITHUB BACKUP ---
     const [githubToken, setGithubToken] = useState('');
@@ -73,6 +74,8 @@ import { saveBackupToGithub, loadBackupFromGithub, GithubBackupConfig } from './
             setGithubStatus('Erro ao restaurar backup do GitHub: ' + e.message);
         }
     };
+=======
+>>>>>>> 2c7a7f2163e852e17c9cdc8f7e100434f2ebb871
 import { openHtmlInNewTab, calculatePartDate, generateUUID, parseWeekDate, generateWeeksForWorkbook, inferParticipationType, normalizeName, formatWeekIdToLabel } from './lib/utils';
 import { generateAiSchedule } from './lib/aiScheduler';
 import { parseHistoricPdf } from './lib/historicPdfParser';
@@ -128,6 +131,7 @@ type ItemToDelete = Publisher | Participation | Workbook | Rule | SpecialEvent |
 type PublisherSortKey = 'name' | 'condition';
 type ParticipationSortOrder = 'desc' | 'asc';
 
+<<<<<<< HEAD
 const AUTO_BACKUP_KEY = 'RVM_AUTO_BACKUP';
 const AUTO_BACKUP_INTERVAL = 5 * 60 * 1000; // 5 minutos
 
@@ -179,6 +183,9 @@ const AppContent: React.FC = () => {
             const interval = setInterval(doBackup, AUTO_BACKUP_INTERVAL);
             return () => clearInterval(interval);
         }, [publishers, rules, participations, workbooks, specialEvents, eventTemplates, manualAssignmentState]);
+=======
+const AppContent: React.FC = () => {
+>>>>>>> 2c7a7f2163e852e17c9cdc8f7e100434f2ebb871
     // STATE MANAGEMENT
     const [activeTab, setActiveTab] = useState<ActiveTab>('Pauta');
     const [publishers, setPublishers] = useState<Publisher[]>([]);
@@ -262,6 +269,7 @@ const AppContent: React.FC = () => {
     }, [loadData]);
 
     // HANDLER DO DEV TOOLS
+<<<<<<< HEAD
     // RESTAURAR BACKUP AUTOMÁTICO
     const handleRestoreAutoBackup = () => {
         const state = loadAutoBackup();
@@ -284,6 +292,8 @@ const AppContent: React.FC = () => {
         }
     };
 
+=======
+>>>>>>> 2c7a7f2163e852e17c9cdc8f7e100434f2ebb871
     const handleLoadDevState = (state: any) => {
         if (state.publishers) setPublishers(state.publishers);
         if (state.participations) setParticipations(state.participations);
@@ -597,6 +607,7 @@ const AppContent: React.FC = () => {
                 <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div className="flex justify-between items-center py-4">
                     <h1 className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">Designações na RVM</h1>
                     <div className="flex items-center space-x-2">
+<<<<<<< HEAD
                         {/* GitHub Backup Controls */}
                         <div className="flex flex-col items-end space-y-1 mr-2">
                             <input type="text" placeholder="Token GitHub" value={githubToken} onChange={e => setGithubToken(e.target.value)} className="px-2 py-1 text-xs rounded border border-gray-300 dark:bg-gray-800 dark:text-gray-100" style={{width:140}} title="Personal Access Token" />
@@ -611,6 +622,8 @@ const AppContent: React.FC = () => {
                         </div>
                                                 <button onClick={handleRestoreAutoBackup} className="p-2 text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400" title="Restaurar Backup Automático"><span role="img" aria-label="restore">♻️</span></button>
                                                 <button onClick={downloadAutoBackup} className="p-2 text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400" title="Baixar Backup Automático"><span role="img" aria-label="download">💾</span></button>
+=======
+>>>>>>> 2c7a7f2163e852e17c9cdc8f7e100434f2ebb871
                         <input type="file" id="import-file" className="hidden" accept=".json" onChange={handleImportData} />
                         <button onClick={() => document.getElementById('import-file')?.click()} className="p-2 text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400" title="Importar Backup"><ArrowUpTrayIcon className="w-6 h-6"/></button>
                         <button onClick={handleExportData} className="p-2 text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400" title="Exportar Backup"><ArrowDownTrayIcon className="w-6 h-6"/></button>
