@@ -23,29 +23,35 @@ import { ArrowDownTrayIcon, ArrowUpTrayIcon, SparklesIcon, CogIcon, ClipboardDoc
 import { getScheduleHtml } from './lib/scheduleTemplate';
 <<<<<<< HEAD
 import { saveBackupToGithub, loadBackupFromGithub, GithubBackupConfig } from './lib/githubBackup';
-    // --- GITHUB BACKUP ---
-    const [githubToken, setGithubToken] = useState('');
-    const [githubOwner, setGithubOwner] = useState('');
-    const [githubRepo, setGithubRepo] = useState('');
-    const [githubPath, setGithubPath] = useState('backups/backup.json');
-    const [githubStatus, setGithubStatus] = useState<string | null>(null);
 
+    // --- GITHUB BACKUP (direto para EliezerRosa/app-rvm-programacaoIA-GAIS-v6) ---
+    // GITHUB BACKUP MELHORADO
+    const [githubToken, setGithubToken] = useState(() => localStorage.getItem('GITHUB_TOKEN') || '');
+    const [githubStatus, setGithubStatus] = useState<string | null>(null);
+    const [githubBranch, setGithubBranch] = useState('main');
+    const [githubFile, setGithubFile] = useState('backup.json');
+    const [githubFolder, setGithubFolder] = useState('backups');
     const githubConfig: GithubBackupConfig = {
-        owner: githubOwner,
-        repo: githubRepo,
-        path: githubPath,
-        token: githubToken
+        owner: 'EliezerRosa',
+        repo: 'app-rvm-programacaoIA-GAIS-v6',
+        path: `${githubFolder.replace(/\/$/, '')}/${githubFile}`,
+        token: githubToken,
+        branch: githubBranch
     };
+
+    // Salva token no localStorage para automação
+    useEffect(() => { localStorage.setItem('GITHUB_TOKEN', githubToken); }, [githubToken]);
 
     const handleGithubBackup = async () => {
         setGithubStatus('Salvando backup no GitHub...');
         try {
             const data = await getAllData();
-            await saveBackupToGithub(githubConfig, data, 'Backup manual via app');
+            await saveBackupToGithub(githubConfig, data, `Backup manual via app (${githubFile})`);
             setGithubStatus('Backup salvo no GitHub com sucesso!');
         } catch (e: any) {
             setGithubStatus('Erro ao salvar backup no GitHub: ' + e.message);
         }
+        setTimeout(() => setGithubStatus(null), 4000);
     };
 
     const handleGithubRestore = async () => {
@@ -73,6 +79,7 @@ import { saveBackupToGithub, loadBackupFromGithub, GithubBackupConfig } from './
         } catch (e: any) {
             setGithubStatus('Erro ao restaurar backup do GitHub: ' + e.message);
         }
+        setTimeout(() => setGithubStatus(null), 4000);
     };
 =======
 >>>>>>> 2c7a7f2163e852e17c9cdc8f7e100434f2ebb871
@@ -607,6 +614,31 @@ const AppContent: React.FC = () => {
                 <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div className="flex justify-between items-center py-4">
                     <h1 className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">Designações na RVM</h1>
                     <div className="flex items-center space-x-2">
+                        {/* GitHub Backup Controls */}
+                        <div className="flex flex-col items-end space-y-1 mr-2 bg-gray-50 dark:bg-gray-800 p-2 rounded shadow border border-gray-200 dark:border-gray-700">
+                            <details className="mb-1 w-full">
+                                <summary className="text-xs text-gray-700 dark:text-gray-200 cursor-pointer">Como usar backup no GitHub?</summary>
+                                <div className="text-xs text-gray-700 dark:text-gray-200 mt-1 space-y-1">
+                                    <div>1. Acesse <a href="https://github.com/settings/tokens" target="_blank" rel="noopener noreferrer" className="underline text-blue-600">github.com/settings/tokens</a></div>
+                                    <div>2. Clique em <b>Generate new token</b> (classic)</div>
+                                    <div>3. Marque o escopo <b>repo</b> e gere o token</div>
+                                    <div>4. Copie o token e cole no campo abaixo</div>
+                                    <div>5. Use os botões para salvar/restaurar backups JSON no repositório</div>
+                                    <div className="mt-1 text-[10px] text-gray-500">O token é salvo apenas no seu navegador.</div>
+                                </div>
+                            </details>
+                            <input type="text" placeholder="Token GitHub" value={githubToken} onChange={e => setGithubToken(e.target.value)} className="px-2 py-1 text-xs rounded border border-gray-300 dark:bg-gray-800 dark:text-gray-100 w-44" title="Personal Access Token" />
+                            <div className="flex space-x-1 mt-1">
+                                <input type="text" placeholder="Branch" value={githubBranch} onChange={e => setGithubBranch(e.target.value)} className="px-1 py-1 text-xs rounded border border-gray-300 dark:bg-gray-800 dark:text-gray-100 w-20" title="Branch" />
+                                <input type="text" placeholder="Pasta" value={githubFolder} onChange={e => setGithubFolder(e.target.value)} className="px-1 py-1 text-xs rounded border border-gray-300 dark:bg-gray-800 dark:text-gray-100 w-20" title="Pasta" />
+                                <input type="text" placeholder="Arquivo" value={githubFile} onChange={e => setGithubFile(e.target.value)} className="px-1 py-1 text-xs rounded border border-gray-300 dark:bg-gray-800 dark:text-gray-100 w-28" title="Arquivo" />
+                            </div>
+                            <div className="flex space-x-1 mt-1">
+                                <button onClick={handleGithubBackup} className="p-1 text-xs bg-indigo-600 text-white rounded hover:bg-indigo-700" title="Salvar backup no GitHub">Salvar GitHub</button>
+                                <button onClick={handleGithubRestore} className="p-1 text-xs bg-green-600 text-white rounded hover:bg-green-700" title="Restaurar backup do GitHub">Restaurar GitHub</button>
+                            </div>
+                            {githubStatus && <span className={`text-xs font-bold ${githubStatus.startsWith('Erro') ? 'text-red-600' : 'text-green-600'}`}>{githubStatus}</span>}
+                        </div>
 <<<<<<< HEAD
                         {/* GitHub Backup Controls */}
                         <div className="flex flex-col items-end space-y-1 mr-2">
